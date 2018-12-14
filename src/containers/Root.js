@@ -5,7 +5,7 @@ import {Route, Switch } from 'react-router-dom';
  
 const App =lazy(()=>import('./App')) 
 const Text =lazy(()=>import('./Text')) 
-
+const Ques =lazy(()=>(import('./Ques')))
 
 class Root extends Component{
     constructor(props){
@@ -35,6 +35,13 @@ const   routers =  [
         //component:App
         render:(props)=><App {...props}/> 
     },
+    {
+        path:'/ques/:id',
+        exact:true,
+        //component:App
+        render:(props)=><Ques {...props}/> 
+    },
+    //
     {
         path:'/text',
         exact:true,

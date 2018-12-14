@@ -18,7 +18,7 @@ class ErrorHoc extends React.Component{
             // You can render any custom fallback UI
             return <h1>Something went wrong.</h1>;
           }else{
-            debugger
+            
             return this.props.children; 
           }
       

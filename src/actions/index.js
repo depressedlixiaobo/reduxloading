@@ -10,8 +10,9 @@ export const SetSomeValue = (data)=>({
     data:data
 })
 
-export const dosomeAsync = ()=> dispatch =>{
+export const dosomeAsync = ()=> (dispatch,getState) =>{
     dispatch(SetSomeValue({
-        name:'xiaoming'
+        name:'xiaoming'+Math.random()
     }))
+     console.log('1')
 }

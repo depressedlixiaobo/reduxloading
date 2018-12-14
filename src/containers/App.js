@@ -22,14 +22,25 @@ class App extends Component {
     componentWillMount(){
         console.log(this.props)
         this.props.dosomeAsync()
+         
+        setTimeout(() => {
+            this.props.dosomeAsync()
+        }, 100);
+        console.log(this.props.index)
+        
+    }
+    componentWillReceiveProps(nextProps) {
+        console.log('receive')
+        console.log(nextProps.index.data.name)
+        debugger
     }
     render() {
         return (
             <ErrorHoc >
             <h1>hello react!
-
+{this.props.index.data&&this.props.index.data.name}
                 <Text />
-                
+               
             </h1>
             </ErrorHoc>
         );
