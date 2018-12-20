@@ -1,4 +1,4 @@
-import React ,{lazy, Suspense,Component}from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 // import ErrorHoc from './containers/ErrorHoc'
 import Root from './containers/Root'

@@ -2,7 +2,7 @@ import React, { Component ,lazy} from 'react';
 import {connect} from 'react-redux'
 import { withRouter} from 'react-router-dom'
 import ErrorHoc  from './ErrorHoc'
-import {dosomeAsync} from '../actions/index'
+import {dosomeAsync,getSomeThings} from '../actions/index'
 
 let Text = lazy(()=>import('./Text' ))
 
@@ -12,7 +12,8 @@ let Text = lazy(()=>import('./Text' ))
     index:state.index
 }),
     {
-        dosomeAsync
+        dosomeAsync,
+        getSomeThings
     }
 )
 class App extends Component {
@@ -21,7 +22,10 @@ class App extends Component {
     }
     componentWillMount(){
         console.log(this.props)
-        this.props.dosomeAsync()
+        this.props.getSomeThings()
+        this.props.dosomeAsync().then(a=>{
+            console.log(a)
+        })
          
         setTimeout(() => {
             this.props.dosomeAsync()
@@ -29,11 +33,11 @@ class App extends Component {
         console.log(this.props.index)
         
     }
-    componentWillReceiveProps(nextProps) {
-        console.log('receive')
-        console.log(nextProps.index.data.name)
-        debugger
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     console.log('receive')
+    //     console.log(nextProps.index.data.name)
+    //     debugger
+    // }
     render() {
         return (
             <ErrorHoc >

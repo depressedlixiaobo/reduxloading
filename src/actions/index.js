@@ -11,8 +11,21 @@ export const SetSomeValue = (data)=>({
 })
 
 export const dosomeAsync = ()=> (dispatch,getState) =>{
-    dispatch(SetSomeValue({
-        name:'xiaoming'+Math.random()
-    }))
-     console.log('1')
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            dispatch(SetSomeValue({
+                name:'xiaoming'+Math.random()
+            }))
+            
+        }, 1000);
+    })
+    
 }
+
+export const getSomeThings = ()=>({
+    EM_HEAD: 'EM_CALL',
+    types:{
+        DATA_LOAD : 'DATA_LOAD_GET',
+
+    }
+})
