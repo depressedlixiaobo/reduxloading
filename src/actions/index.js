@@ -25,5 +25,9 @@ export const dosomeAsync = ()=> (dispatch,getState) =>{
 export const getSomeThings = ()=>({
     EM_HEAD: 'EM_CALL',
     type:'DATA_LOAD_GET',
-    
+    ops:{
+        url:'https://api.github.com/users/chriscoyier/repos',
+        config:{}
+    },
+    hooks:{} //生命周期
 })

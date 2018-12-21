@@ -20,7 +20,8 @@ export default store => next => action =>{
     let ac_hook = action['hooks'] || {}
     //第二阶段 准备  接收一个函数 
     return fetch(action.ops.url, action.ops.config).then(stream => {
-        /**
+        debugger
+        /** 
          * ! 生命周期 第 - 阶段 enter
          */
         if(ac_hook.enter&&typeof ac_hook.enter == 'function'){
@@ -44,6 +45,7 @@ export default store => next => action =>{
         })
         return newResult
     }).catch(error=>{
+        debugger
          /**
          * ! 生命周期 第 三 阶段  didCatch
          */
@@ -51,7 +53,7 @@ export default store => next => action =>{
             ac_hook.didCatch(error)
         }
         dispatch({
-            type : EM_HEAD + types['DATA_LOAD'],
+            type :`${actionPre}_LOADING`,
             state : 'FAIL',
             msg : error
         })
@@ -65,11 +67,13 @@ export default store => next => action =>{
 const emcall_common_reducer = (ops) =>{
     let defaultState = ops.defaultState
     const EM_HEAD = 'EM_CALL'
-    let actionPre = `${EM_HEAD}_${action.type}` 
+   
     let reducer = (state = defaultState,action)=>{
+        debugger
         let newState = state
+        let actionPre = `${EM_HEAD}_${action.type}` 
         switch(action.type){
-            case `${actionPre}_LOADING`:
+            case 'EM_CALL_DATA_LOAD_GET_LOADING'://`${actionPre}_LOADING`:
                 /**
                  * ! 改方式 是 使用了 em-redux-thunk的修改值的方式
                  */
@@ -85,7 +89,7 @@ const emcall_common_reducer = (ops) =>{
                         /**
                          * !暴露 给用户按照自定义规则输入
                          */
-                        newState = ops.SUCC && ops.SUCC(state,data) || {}
+                        newState = ops.SUCC && ops.SUCC(state,action.payload) || {}
 
                         break;
                     case 'FAIL':
