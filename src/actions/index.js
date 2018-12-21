@@ -24,8 +24,6 @@ export const dosomeAsync = ()=> (dispatch,getState) =>{
 
 export const getSomeThings = ()=>({
     EM_HEAD: 'EM_CALL',
-    types:{
-        DATA_LOAD : 'DATA_LOAD_GET',
-
-    }
+    type:'DATA_LOAD_GET',
+    
 })
