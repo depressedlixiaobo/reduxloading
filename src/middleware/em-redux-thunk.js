@@ -5,7 +5,7 @@ export default store => next => action =>{
         return next(action)
     }
      
-    let actionPre = `${EM_HEAD}_${action.type}`
+    let actionPre = `${EM_HEAD}_${action.type}` 
     let dispatch =  store.dispatch
 
         /**
@@ -40,7 +40,7 @@ export default store => next => action =>{
         dispatch({
             type : `${actionPre}_LOADING`  ,
             state : 'SUCC',
-            data : newResult
+            payload : newResult
         })
         return newResult
     }).catch(error=>{
@@ -57,34 +57,53 @@ export default store => next => action =>{
         })
       
     })
-    return  ajax({
-        url:'https://api.github.com/users/chriscoyier/repos',
-        method:'GET',
-        headers:'',
-       // body:{a:'b'}
-    }).then(result =>{
-         
-        
-        dispatch({
-            type : EM_HEAD + types['DATA_LOAD'],
-            state : 'SUCC',
-            data : result
-        })
-        console.log(result)
-        return result
-    }).then(c=>{
-        console.log(store.getState())
-    }).catch(error=>{
-
-        dispatch({
-            type : EM_HEAD + types['DATA_LOAD'],
-            state : 'FAIL',
-            msg : error
-        })
-        return {msg: error}
-        console.log(error)
-    })
+    
      
 }
 
+//defaultState ,LOADING ,SUCC ,FAIL
+const emcall_common_reducer = (ops) =>{
+    let defaultState = ops.defaultState
+    const EM_HEAD = 'EM_CALL'
+    let actionPre = `${EM_HEAD}_${action.type}` 
+    let reducer = (state = defaultState,action)=>{
+        let newState = state
+        switch(action.type){
+            case `${actionPre}_LOADING`:
+                /**
+                 * ! 改方式 是 使用了 em-redux-thunk的修改值的方式
+                 */
+                switch (action.state) {
+                    case 'LOADING':
+                        /**
+                         * !暴露 给用户按照自定义规则输入
+                         */
+                        newState = ops.LOADING && ops.LOADING(state) || {}
+                    break;
+
+                    case 'SUCC':
+                        /**
+                         * !暴露 给用户按照自定义规则输入
+                         */
+                        newState = ops.SUCC && ops.SUCC(state,data) || {}
+
+                        break;
+                    case 'FAIL':
+                        /**
+                         * !暴露 给用户按照自定义规则输入
+                         */
+                        newState = ops.FAIL && ops.FAIL(state) || {}
+                    default:
+                        break;
+                }
+            break
+            default:
+             
+            break;
+        }
+        return newState
+    }
+    return reducer
+}
+export {  emcall_common_reducer }
  
